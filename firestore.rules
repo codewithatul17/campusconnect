@@ -1,0 +1,114 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for security checks
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // ==========================================
+    // 1. Users Collection
+    // ==========================================
+    // Anyone logged in can read student profiles.
+    // Students can only write/update their own profile document.
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if false; // Profiles shouldn't be casually deleted
+    }
+
+    // ==========================================
+    // 2. Events Collection
+    // ==========================================
+    // All campus events are public to view.
+    // Registered students can register or campus admins can create events.
+    match /events/{eventId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated(); // For incrementing registration counts
+      allow delete: if isAuthenticated() && request.auth.token.admin == true;
+    }
+
+    // ==========================================
+    // 3. Clubs Collection
+    // ==========================================
+    // Campus clubs directory is public.
+    // Joining updates the member tally.
+    match /clubs/{clubId} {
+      allow read: if true;
+      allow create, update: if isAuthenticated();
+      allow delete: if isAuthenticated() && request.auth.token.admin == true;
+    }
+
+    // ==========================================
+    // 4. Announcements Collection
+    // ==========================================
+    // Official bulletins are public for all students.
+    // Only verified administrative accounts can publish or modify announcements.
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow write: if isAuthenticated() && (request.auth.token.admin == true || request.auth.token.staff == true);
+    }
+
+    // ==========================================
+    // 5. Study Resources Collection
+    // ==========================================
+    // Notes and question papers are readable by everyone.
+    // Any authenticated student can contribute a study resource.
+    match /resources/{resourceId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        request.auth.token.admin == true
+      );
+    }
+
+    // ==========================================
+    // 6. Community Posts Collection
+    // ==========================================
+    // Posts are publicly readable by campus community.
+    // Authenticated users can publish posts and like/comment.
+    // Authors can update or delete their own posts.
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      // Allow author to edit, or others to increment likes / append comments
+      allow update: if isAuthenticated();
+      allow delete: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        request.auth.token.admin == true
+      );
+    }
+
+    // ==========================================
+    // 7. Lost & Found Collection
+    // ==========================================
+    // Public to view lost or found belongings.
+    // Authenticated students can post reports and mark them resolved.
+    match /lost_found/{itemId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated();
+      allow delete: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        request.auth.token.admin == true
+      );
+    }
+
+    // ==========================================
+    // 8. Notifications Collection
+    // ==========================================
+    // Students can only read and manage their personal notifications.
+    match /notifications/{notifId} {
+      allow read, update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated();
+    }
+  }
+}

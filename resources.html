@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Resources | CampusConnect</title>
+    <!-- Instant Theme Setter (Prevents white background blinking / FOUC on page switch) -->
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('campusconnect_theme') || localStorage.getItem('campus_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo-wrapper" title="CampusConnect - Home">
+          <div class="logo-circles">
+            <span class="logo-circle-left"></span>
+            <span class="logo-circle-right"></span>
+          </div>
+          <span>Campus<span class="text-coral">Connect</span></span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            </span>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <a href="events.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </span>
+            <span>Events</span>
+          </div>
+        </a>
+
+        <a href="clubs.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <span>Clubs</span>
+          </div>
+        </a>
+
+        <a href="sports.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path><path d="M14 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+            </span>
+            <span>Sports</span>
+          </div>
+          <span class="badge badge-warning">Trials</span>
+        </a>
+
+        <a href="announcements.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            </span>
+            <span>Announcements</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Academic & Campus</div>
+
+        <a href="campus-map.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+            </span>
+            <span>Campus Map</span>
+          </div>
+          <span class="badge badge-primary">68 Acres</span>
+        </a>
+        <a href="resources.html" class="nav-item active">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <span>Resources</span>
+          </div>
+          <span class="badge badge-primary">86+</span>
+        </a>
+
+        <a href="lost-found.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <span>Lost & Found</span>
+          </div>
+        </a>
+
+        <a href="create-post.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            </span>
+            <span>Create Post</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Personal</div>
+
+        <a href="profile.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </span>
+            <span>My Profile</span>
+          </div>
+        </a>
+
+                <a href="index.html" class="nav-item" title="Home">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </span>
+            <span>Home</span>
+          </div>
+          
+        </a>
+        <a href="#" class="nav-item btn-logout-action" style="margin-top:auto; color:var(--danger);">
+          <div class="nav-item-content">
+            <span class="nav-item-icon" style="color:var(--danger)">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </span>
+            <span>Logout</span>
+          </div>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-mini-card">
+          <div class="avatar-circle sync-user-avatar">A</div>
+          <div class="user-mini-info">
+            <div class="user-mini-name sync-user-name">Atul Yadav</div>
+            <div class="user-mini-sub sync-user-sub">B.Tech (CSE)</div>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="btn-icon sidebar-toggle-btn" aria-label="Toggle drawer">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+
+          <div class="search-container">
+            <div class="search-input-wrapper">
+              <span class="search-icon">
+                <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </span>
+              <input type="text" id="globalSearchInput" class="search-input" placeholder="Search study materials..." autocomplete="off">
+            </div>
+            <div id="searchDropdown" class="search-dropdown"></div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn-icon theme-toggle-btn" aria-label="Toggle Theme">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+
+          <div class="notification-wrapper">
+            <button id="notifBtn" class="btn-icon" aria-label="Notifications">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span id="notifBadge" class="notification-badge">2</span>
+            </button>
+            <div id="notifDropdown" class="notification-dropdown">
+              <div class="notification-header">
+                <h4 style="font-size:0.95rem;">Notifications</h4>
+              </div>
+              <div id="notifList" class="notification-list"></div>
+            </div>
+          </div>
+
+          <div class="user-menu-wrapper">
+            <button id="userMenuBtn" class="avatar-circle sync-user-avatar" style="width:38px;height:38px;cursor:pointer;border:2px solid var(--border-color);">A</button>
+            <div id="userMenuDropdown" class="user-menu-dropdown">
+              <a href="profile.html" class="user-menu-item">My Profile</a>
+                            <a href="index.html" class="user-menu-item" title="Home">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+              </a>
+              <div class="user-menu-item logout btn-logout-action">Logout</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Study Resources & LRC Repository</h1>
+            <p class="page-subtitle">Access Bennett LRC notes, previous examination papers, cheat-sheets, and course materials tailored for SCSET, SOM, and SOL students.</p>
+          </div>
+          <div>
+            <button class="btn btn-primary" onclick="document.getElementById('uploadResourceModal').classList.add('active')">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              Upload Resource
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+          <div class="filter-pills">
+            <button class="filter-pill active" data-subject="all">All Subjects</button>
+            <button class="filter-pill" data-subject="DSA">DSA</button>
+            <button class="filter-pill" data-subject="DBMS">DBMS</button>
+            <button class="filter-pill" data-subject="Operating Systems">Operating Systems</button>
+            <button class="filter-pill" data-subject="Computer Networks">Computer Networks</button>
+            <button class="filter-pill" data-subject="Mathematics">Mathematics</button>
+            <button class="filter-pill" data-subject="Python">Python</button>
+            <button class="filter-pill" data-subject="Java">Java</button>
+            <button class="filter-pill" data-subject="C++">C++</button>
+          </div>
+
+          <div style="display:flex;gap:0.75rem;margin-left:auto;width:100%;max-width:440px;">
+            <input type="text" id="resourceSearchInput" class="form-control" placeholder="Search by topic, keyword, or author..." style="padding:0.5rem 0.85rem;font-size:0.88rem;">
+            <select id="resourceTypeFilter" class="form-select" style="width:160px;padding:0.5rem 0.85rem;font-size:0.88rem;">
+              <option value="all">All Formats</option>
+              <option value="PDF">PDF</option>
+              <option value="Notes">Notes</option>
+              <option value="Question Paper">Question Paper</option>
+              <option value="Video">Video / Link</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Resources Cards Grid -->
+        <div id="resourcesGrid" class="events-grid">
+          <!-- Rendered dynamically by resources.js -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Upload Resource Modal Form -->
+  <div id="uploadResourceModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Upload Study Resource</h3>
+        <button class="btn-icon" onclick="closeModal('uploadResourceModal')">&times;</button>
+      </div>
+      <form id="uploadResourceForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="resourceTitle">Resource Title</label>
+            <input type="text" id="resourceTitle" class="form-control" placeholder="e.g. Dynamic Programming Complete Patterns Sheet" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="resourceSubject">Subject</label>
+              <select id="resourceSubject" class="form-select" required>
+                <option value="DSA">DSA</option>
+                <option value="DBMS">DBMS</option>
+                <option value="Operating Systems">Operating Systems</option>
+                <option value="Computer Networks">Computer Networks</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Python">Python</option>
+                <option value="Java">Java</option>
+                <option value="C++">C++</option>
+                <option value="Digital Design">Digital Design</option>
+                <option value="Microprocessor">Microprocessor</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="resourceType">Resource Type</label>
+              <select id="resourceType" class="form-select" required>
+                <option value="PDF">PDF Document</option>
+                <option value="Notes">Handwritten Notes</option>
+                <option value="Question Paper">Previous Question Paper</option>
+                <option value="Video">Video Tutorial / Link</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="resourceDesc">Description / Summary</label>
+            <textarea id="resourceDesc" class="form-control" rows="3" placeholder="Briefly describe what topics this document covers..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('uploadResourceModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Upload to Repository</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Resource Preview & Details Modal -->
+  <div id="resourcePreviewModal" class="modal-overlay">
+    <div class="modal-content" style="max-width:880px;width:95%;max-height:92vh;display:flex;flex-direction:column;">
+      <div class="modal-header">
+        <h3 class="modal-title">Resource Document Viewer & Study Material</h3>
+        <button class="btn-icon" onclick="closeModal('resourcePreviewModal')">&times;</button>
+      </div>
+      <div class="modal-body" id="resourcePreviewModalBody" style="overflow-y:auto;padding:1.5rem;max-height:calc(92vh - 140px);">
+        <!-- Injected dynamically by resources.js -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('resourcePreviewModal')">Close</button>
+        <button type="button" class="btn btn-outline" id="resourcePreviewPrintBtn">
+          <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print / Save PDF
+        </button>
+        <button type="button" class="btn btn-primary" id="resourcePreviewDownloadBtn">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download Document
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <a href="dashboard.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>Home</span>
+    </a>
+    <a href="events.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+      <span>Events</span>
+    </a>
+    <a href="clubs.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+      <span>Clubs</span>
+    </a>
+    <a href="sports.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+      <span>Sports</span>
+    </a>
+    <a href="lost-found.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <span>Lost</span>
+    </a>
+    <a href="profile.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- App Core & Resources -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/resources.js"></script>
+</body>
+</html>

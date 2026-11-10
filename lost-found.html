@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lost & Found | CampusConnect</title>
+    <!-- Instant Theme Setter (Prevents white background blinking / FOUC on page switch) -->
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('campusconnect_theme') || localStorage.getItem('campus_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo-wrapper" title="CampusConnect - Home">
+          <div class="logo-circles">
+            <span class="logo-circle-left"></span>
+            <span class="logo-circle-right"></span>
+          </div>
+          <span>Campus<span class="text-coral">Connect</span></span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            </span>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <a href="events.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </span>
+            <span>Events</span>
+          </div>
+        </a>
+
+        <a href="clubs.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <span>Clubs</span>
+          </div>
+        </a>
+
+        <a href="sports.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path><path d="M14 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+            </span>
+            <span>Sports</span>
+          </div>
+          <span class="badge badge-warning">Trials</span>
+        </a>
+
+        <a href="announcements.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            </span>
+            <span>Announcements</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Academic & Campus</div>
+
+        <a href="campus-map.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+            </span>
+            <span>Campus Map</span>
+          </div>
+          <span class="badge badge-primary">68 Acres</span>
+        </a>
+        <a href="resources.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <span>Resources</span>
+          </div>
+        </a>
+
+        <a href="lost-found.html" class="nav-item active">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <span>Lost & Found</span>
+          </div>
+          <span class="badge badge-warning">Help</span>
+        </a>
+
+        <a href="create-post.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            </span>
+            <span>Create Post</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Personal</div>
+
+        <a href="profile.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </span>
+            <span>My Profile</span>
+          </div>
+        </a>
+
+                <a href="index.html" class="nav-item" title="Home">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </span>
+            <span>Home</span>
+          </div>
+          
+        </a>
+        <a href="#" class="nav-item btn-logout-action" style="margin-top:auto; color:var(--danger);">
+          <div class="nav-item-content">
+            <span class="nav-item-icon" style="color:var(--danger)">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </span>
+            <span>Logout</span>
+          </div>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-mini-card">
+          <div class="avatar-circle sync-user-avatar">A</div>
+          <div class="user-mini-info">
+            <div class="user-mini-name sync-user-name">Atul Yadav</div>
+            <div class="user-mini-sub sync-user-sub">B.Tech (CSE)</div>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="btn-icon sidebar-toggle-btn" aria-label="Toggle drawer">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+
+          <div class="search-container">
+            <div class="search-input-wrapper">
+              <span class="search-icon">
+                <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </span>
+              <input type="text" id="globalSearchInput" class="search-input" placeholder="Search campus items..." autocomplete="off">
+            </div>
+            <div id="searchDropdown" class="search-dropdown"></div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn-icon theme-toggle-btn" aria-label="Toggle Theme">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+
+          <div class="notification-wrapper">
+            <button id="notifBtn" class="btn-icon" aria-label="Notifications">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span id="notifBadge" class="notification-badge">2</span>
+            </button>
+            <div id="notifDropdown" class="notification-dropdown">
+              <div class="notification-header">
+                <h4 style="font-size:0.95rem;">Notifications</h4>
+              </div>
+              <div id="notifList" class="notification-list"></div>
+            </div>
+          </div>
+
+          <div class="user-menu-wrapper">
+            <button id="userMenuBtn" class="avatar-circle sync-user-avatar" style="width:38px;height:38px;cursor:pointer;border:2px solid var(--border-color);">A</button>
+            <div id="userMenuDropdown" class="user-menu-dropdown">
+              <a href="profile.html" class="user-menu-item">My Profile</a>
+                            <a href="index.html" class="user-menu-item" title="Home">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+              </a>
+              <div class="user-menu-item logout btn-logout-action">Logout</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Campus Lost & Found</h1>
+            <p class="page-subtitle">Help campus belongings find their way back home. Misplaced an item or found someone's essentials?</p>
+          </div>
+          <div style="display:flex;gap:0.75rem;">
+            <button class="btn btn-outline btn-sm" onclick="openReportModal('lost')">
+              📢 Report Lost Item
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="openReportModal('found')">
+              🎒 Report Found Item
+            </button>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs: Lost Items vs Found Items -->
+        <div class="tabs-nav" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;">
+          <div style="display:flex;gap:0.5rem;">
+            <div class="tab-item lost-found-tab active" data-tab="lost">
+              🔍 Lost Items
+            </div>
+            <div class="tab-item lost-found-tab" data-tab="found">
+              📦 Found Items
+            </div>
+          </div>
+
+          <div style="max-width:300px;width:100%;margin-bottom:0.5rem;">
+            <input type="text" id="lostFoundSearch" class="form-control" placeholder="Filter by item or location..." style="padding:0.45rem 0.85rem;font-size:0.88rem;">
+          </div>
+        </div>
+
+        <!-- Lost and Found Items Grid -->
+        <div id="lostFoundGrid" class="events-grid">
+          <!-- Rendered dynamically by lost-found.js -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Report Item Modal -->
+  <div id="reportItemModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Report Item</h3>
+        <button class="btn-icon" onclick="closeModal('reportItemModal')">&times;</button>
+      </div>
+      <form id="reportItemForm">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="reportType">Report Type</label>
+              <select id="reportType" class="form-select" required>
+                <option value="lost">I Lost an Item</option>
+                <option value="found">I Found an Item</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reportCategory">Category</label>
+              <select id="reportCategory" class="form-select" required>
+                <option value="Electronics">Electronics (Laptop, Charger, Phone)</option>
+                <option value="Accessories">Accessories (Bottle, Bag, Glasses)</option>
+                <option value="Keys">Keys / ID Cards</option>
+                <option value="Books">Books & Notebooks</option>
+                <option value="Other">Other Belonging</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reportItemName">Item Name</label>
+            <input type="text" id="reportItemName" class="form-control" placeholder="e.g. Black HP Laptop Charger (65W)" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="reportLocation">Campus Location</label>
+              <input type="text" id="reportLocation" class="form-control" placeholder="e.g. LRC 2nd Floor, Block C Cafeteria, Sports Complex" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reportDate">Date</label>
+              <input type="text" id="reportDate" class="form-control" placeholder="e.g. 02 Oct 2026" value="Today">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reportContact">Contact Email / Phone</label>
+            <input type="text" id="reportContact" class="form-control" placeholder="e.g. student@bennett.edu.in or room / hostel no.">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reportDesc">Description & Distinct Features</label>
+            <textarea id="reportDesc" class="form-control" rows="3" placeholder="Provide identifying marks, stickers, serial details, or specific placement..." required></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('reportItemModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Contact Owner Modal -->
+  <div id="contactModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Contact Information</h3>
+        <button class="btn-icon" onclick="closeModal('contactModal')">&times;</button>
+      </div>
+      <div id="contactModalBody" class="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('contactModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <a href="dashboard.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>Home</span>
+    </a>
+    <a href="events.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+      <span>Events</span>
+    </a>
+    <a href="clubs.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+      <span>Clubs</span>
+    </a>
+    <a href="sports.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+      <span>Sports</span>
+    </a>
+    <a href="lost-found.html" class="mobile-nav-link active">
+      <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <span>Lost</span>
+    </a>
+    <a href="profile.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- App Core & Lost & Found -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/lost-found.js"></script>
+</body>
+</html>

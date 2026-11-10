@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bennett Sports & Athletics | CampusConnect</title>
+    <!-- Instant Theme Setter (Prevents white background blinking / FOUC on page switch) -->
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('campusconnect_theme') || localStorage.getItem('campus_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo-wrapper" title="CampusConnect - Home">
+          <div class="logo-circles">
+            <span class="logo-circle-left"></span>
+            <span class="logo-circle-right"></span>
+          </div>
+          <span>Campus<span class="text-coral">Connect</span></span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            </span>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <a href="events.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </span>
+            <span>Events</span>
+          </div>
+          <span class="badge badge-primary">17</span>
+        </a>
+
+        <a href="clubs.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <span>Clubs</span>
+          </div>
+          <span class="badge badge-primary">18</span>
+        </a>
+
+        <a href="sports.html" class="nav-item active">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path><path d="M14 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+            </span>
+            <span>Sports</span>
+          </div>
+          <span class="badge badge-warning">Trials Active</span>
+        </a>
+
+        <a href="announcements.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            </span>
+            <span>Announcements</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Academic & Campus</div>
+
+        <a href="campus-map.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+            </span>
+            <span>Campus Map</span>
+          </div>
+          <span class="badge badge-primary">68 Acres</span>
+        </a>
+        <a href="resources.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <span>Resources</span>
+          </div>
+        </a>
+
+        <a href="lost-found.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <span>Lost & Found</span>
+          </div>
+        </a>
+
+        <a href="create-post.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            </span>
+            <span>Create Post</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Personal</div>
+
+        <a href="profile.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </span>
+            <span>My Profile</span>
+          </div>
+        </a>
+
+        <a href="index.html" class="nav-item" title="Home">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </span>
+            <span>Home</span>
+          </div>
+        </a>
+
+        <a href="#" class="nav-item btn-logout-action" style="margin-top:auto; color:var(--danger);">
+          <div class="nav-item-content">
+            <span class="nav-item-icon" style="color:var(--danger)">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </span>
+            <span>Logout</span>
+          </div>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-mini-card">
+          <div class="avatar-circle sync-user-avatar">A</div>
+          <div class="user-mini-info">
+            <div class="user-mini-name sync-user-name">Atul Yadav</div>
+            <div class="user-mini-sub sync-user-sub">B.Tech (CSE)</div>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="btn-icon sidebar-toggle-btn" aria-label="Toggle navigation drawer">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+
+          <div class="search-container">
+            <div class="search-input-wrapper">
+              <span class="search-icon">
+                <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </span>
+              <input type="text" id="sportsSearchInput" class="search-input" placeholder="Search sports trials, tournaments, facilities..." autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn-icon theme-toggle-btn" aria-label="Toggle Theme">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+
+          <div class="notification-wrapper">
+            <button id="notifBtn" class="btn-icon" aria-label="Notifications">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span id="notifBadge" class="notification-badge">2</span>
+            </button>
+            <div id="notifDropdown" class="notification-dropdown">
+              <div class="notification-header">
+                <h4 style="font-size:0.95rem;">Notifications</h4>
+              </div>
+              <div id="notifList" class="notification-list"></div>
+            </div>
+          </div>
+
+          <div class="user-menu-wrapper">
+            <button id="userMenuBtn" class="avatar-circle sync-user-avatar" style="width:38px;height:38px;cursor:pointer;border:2px solid var(--border-color);">A</button>
+            <div id="userMenuDropdown" class="user-menu-dropdown">
+              <a href="profile.html" class="user-menu-item">My Profile</a>
+              <a href="index.html" class="user-menu-item" title="Home">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+              </a>
+              <div class="user-menu-item logout btn-logout-action">Logout</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <!-- Page Header -->
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Bennett Sports & Athletics Hub</h1>
+            <p class="page-subtitle">Official portal for university varsity selection trials, Sportikon 2026, intra-house leagues, and Olympic-grade sports complexes.</p>
+          </div>
+          <div style="display:flex;gap:0.75rem;">
+            <button class="btn btn-primary btn-sm" onclick="scrollToSection('trialsSection')">View Open Trials 🎯</button>
+            <button class="btn btn-outline btn-sm" onclick="scrollToSection('competitionsSection')">Sportikon Fest 🏆</button>
+          </div>
+        </div>
+
+        <!-- Sports Metric Highlights Strip -->
+        <div class="stats-grid" style="margin-bottom:1.75rem;">
+          <div class="stat-card" style="border-left:4px solid var(--primary);">
+            <div class="stat-icon" style="background:var(--primary-light);color:var(--primary);">🏆</div>
+            <div class="stat-info">
+              <div class="stat-number">16+</div>
+              <div class="stat-label">Sports Disciplines in Sportikon</div>
+            </div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid var(--warning);">
+            <div class="stat-icon" style="background:var(--warning-light);color:var(--warning);">🎯</div>
+            <div class="stat-info">
+              <div class="stat-number">6 Active</div>
+              <div class="stat-label">Varsity Selection Trials Open</div>
+            </div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid var(--success);">
+            <div class="stat-icon" style="background:var(--success-light);color:var(--success);">🛡️</div>
+            <div class="stat-info">
+              <div class="stat-number">4 Houses</div>
+              <div class="stat-label">Falcons, Tigers, Gladiators, Stallions</div>
+            </div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid #8B5CF6;">
+            <div class="stat-icon" style="background:rgba(139,92,246,0.18);color:#8B5CF6;">🏟️</div>
+            <div class="stat-info">
+              <div class="stat-number">6 Complexes</div>
+              <div class="stat-label">Turf, Pool, Courts & High-Tech Gym</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sports Section Tabs Bar -->
+        <div class="filter-bar" style="margin-bottom:1.5rem;">
+          <div class="filter-pills" id="sportsTabPills">
+            <button class="filter-pill active" data-tab="all">All Sports Overview</button>
+            <button class="filter-pill" data-tab="trials">🎯 Varsity Team Trials (Selections)</button>
+            <button class="filter-pill" data-tab="competitions">🏆 Tournaments & Competitions</button>
+            <button class="filter-pill" data-tab="facilities">🏟️ Campus Facilities</button>
+            <button class="filter-pill" data-tab="houses">🛡️ House Leaderboard</button>
+          </div>
+        </div>
+
+        <!-- Sub-section: Varsity Selection Trials -->
+        <section id="trialsSection" class="sports-sub-section" style="margin-bottom:2.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+            <div>
+              <h2 style="font-size:1.35rem;font-weight:800;color:var(--text-primary);display:flex;align-items:center;gap:0.5rem;">
+                <span>🎯</span> Varsity Team Selection Trials (2026-27 Squad)
+              </h2>
+              <p style="font-size:0.88rem;color:var(--text-secondary);">Trials for Bennett University official athletic squads representing BU in inter-university championships.</p>
+            </div>
+            <span class="badge badge-warning" style="font-weight:700;">Open for all Bennett Students</span>
+          </div>
+
+          <div id="trialsGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(340px, 1fr));gap:1.25rem;">
+            <!-- Rendered by js/sports.js -->
+          </div>
+        </section>
+
+        <!-- Sub-section: Competitions & Tournaments -->
+        <section id="competitionsSection" class="sports-sub-section" style="margin-bottom:2.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+            <div>
+              <h2 style="font-size:1.35rem;font-weight:800;color:var(--text-primary);display:flex;align-items:center;gap:0.5rem;">
+                <span>🏆</span> Active & Upcoming Tournaments
+              </h2>
+              <p style="font-size:0.88rem;color:var(--text-secondary);">National championships, inter-house leagues, and intra-batch competitive showdowns.</p>
+            </div>
+            <span class="badge badge-primary">₹3.75 Lakhs+ Total Prizes</span>
+          </div>
+
+          <div id="competitionsGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(340px, 1fr));gap:1.25rem;">
+            <!-- Rendered by js/sports.js -->
+          </div>
+        </section>
+
+        <!-- Sub-section: Campus Sports Facilities -->
+        <section id="facilitiesSection" class="sports-sub-section" style="margin-bottom:2.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+            <div>
+              <h2 style="font-size:1.35rem;font-weight:800;color:var(--text-primary);display:flex;align-items:center;gap:0.5rem;">
+                <span>🏟️</span> World-Class Bennett Sports Facilities
+              </h2>
+              <p style="font-size:0.88rem;color:var(--text-secondary);">Free access for Bennett University students with digital gear checkout.</p>
+            </div>
+            <span class="badge badge-success">Open Daily 06:00 AM - 10:30 PM</span>
+          </div>
+
+          <div id="facilitiesGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:1.25rem;">
+            <!-- Rendered by js/sports.js -->
+          </div>
+        </section>
+
+        <!-- Sub-section: House System Standings -->
+        <section id="housesSection" class="sports-sub-section" style="margin-bottom:2.5rem;">
+          <div style="margin-bottom:1rem;">
+            <h2 style="font-size:1.35rem;font-weight:800;color:var(--text-primary);display:flex;align-items:center;gap:0.5rem;">
+              <span>🛡️</span> Annual Inter-House Championship Standings
+            </h2>
+            <p style="font-size:0.88rem;color:var(--text-secondary);">The 4 Bennett University competitive houses competing across IHFL, BCPL, and track events.</p>
+          </div>
+
+          <div id="housesGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));gap:1.25rem;">
+            <!-- Rendered by js/sports.js -->
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Trial Registration Modal -->
+  <div id="trialModal" class="modal-overlay">
+    <div class="modal-content" style="max-width:560px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="trialModalTitle">Register for Varsity Trials</h3>
+        <button class="btn-icon" onclick="closeModal('trialModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="trialModalInfo" style="background:var(--bg-hover);padding:1rem;border-radius:var(--radius-md);margin-bottom:1.25rem;font-size:0.88rem;"></div>
+
+        <form id="trialRegisterForm">
+          <input type="hidden" id="trialModalId">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="trialName" class="form-control" value="Atul Yadav" required>
+          </div>
+          <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group">
+              <label class="form-label">Enrollment / Roll No.</label>
+              <input type="text" id="trialRoll" class="form-control" placeholder="e.g. E24CSEU0101" value="E24CSEU0101" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">School / Branch</label>
+              <input type="text" id="trialBranch" class="form-control" value="SCSET (B.Tech CSE)" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Playing Position / Specialization</label>
+            <input type="text" id="trialPosition" class="form-control" placeholder="e.g. Central Midfielder, Right Arm Pacer, Point Guard" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Past Sports Experience / Achievements</label>
+            <textarea id="trialExperience" class="form-control" rows="2" placeholder="e.g. Played Zonal / CBSE Nationals, High School Captain, Inter-college medalist..."></textarea>
+          </div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;">
+            ⚠️ <em>Bring your physical Bennett Student ID card and required athletic kit to the venue 15 minutes before trial time.</em>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.75rem;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('trialModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Confirm Trial Registration 🎟️</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <a href="dashboard.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>Home</span>
+    </a>
+    <a href="events.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+      <span>Events</span>
+    </a>
+    <a href="clubs.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+      <span>Clubs</span>
+    </a>
+    <a href="sports.html" class="mobile-nav-link active">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+      <span>Sports</span>
+    </a>
+    <a href="profile.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- App Core & Sports Controller -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/sports.js"></script>
+</body>
+</html>

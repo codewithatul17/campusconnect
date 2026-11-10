@@ -1,0 +1,262 @@
+/* ==========================================================================
+   CampusConnect - Responsive Styles
+   Breakpoints: 1920px, 1440px, 1024px, 768px, 480px, 375px
+   ========================================================================== */
+
+/* Large Desktop Screens (1920px+) */
+@media (min-width: 1920px) {
+  .content-body {
+    max-width: 1700px;
+  }
+  .dashboard-grid {
+    grid-template-columns: 3fr 1.2fr;
+  }
+  .events-grid, .clubs-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Standard Desktop / Laptop (1440px) */
+@media (max-width: 1440px) {
+  .dashboard-grid {
+    grid-template-columns: 2.2fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Tablet Landscape & Small Laptops (1024px) */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-sidebar {
+    padding: 2.5rem;
+  }
+}
+
+/* Tablet Portrait & Large Phones (768px) */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 95;
+  }
+
+  .sidebar-backdrop.active {
+    display: block;
+  }
+
+  .main-wrapper {
+    margin-left: 0;
+    padding-bottom: 70px; /* Space for mobile bottom nav */
+  }
+
+  .sidebar-toggle-btn {
+    display: inline-flex;
+  }
+
+  .topbar {
+    padding: 0 1rem;
+  }
+
+  .topbar-left {
+    max-width: none;
+    gap: 0.75rem;
+  }
+
+  .content-body {
+    padding: 1.25rem;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  /* Auth Screens on Tablet */
+  .auth-wrapper {
+    flex-direction: column;
+  }
+
+  .auth-sidebar {
+    display: none;
+  }
+
+  .auth-main {
+    padding: 2.5rem 1.5rem;
+  }
+
+  /* Form Grids */
+  .form-row, .form-row-3 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Events & Clubs Grid */
+  .events-grid, .clubs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Bottom Navigation Bar for Mobile */
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+    z-index: 100;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 0.5rem;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast);
+  }
+
+  .mobile-nav-link.active {
+    color: var(--primary);
+  }
+
+  .mobile-nav-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .notification-dropdown {
+    width: 90vw;
+    right: -60px;
+  }
+}
+
+/* Small Phones (480px) */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    padding: 0 0.75rem;
+  }
+
+  .search-container {
+    display: none; /* Hide default topbar search to prevent squishing, mobile search icon can open modal or bar */
+  }
+
+  .content-body {
+    padding: 1rem 0.85rem;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.85rem;
+  }
+
+  .modal-content {
+    margin: 0.5rem;
+    max-height: 95vh;
+  }
+
+  .card-footer, .event-footer-action {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .card-footer .btn, .event-footer-action .btn {
+    width: 100%;
+  }
+
+  .toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 75px;
+  }
+
+  .toast {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+/* Extra Small Phones (375px) */
+@media (max-width: 375px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .auth-main {
+    padding: 1.5rem 1rem;
+  }
+
+  .btn {
+    padding: 0.55rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Desktop default for mobile bottom nav */
+.mobile-bottom-nav {
+  display: none;
+}

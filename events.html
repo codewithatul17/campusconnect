@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Events & Academic Calendar | CampusConnect</title>
+    <!-- Instant Theme Setter (Prevents white background blinking / FOUC on page switch) -->
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('campusconnect_theme') || localStorage.getItem('campus_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo-wrapper" title="CampusConnect - Home">
+          <div class="logo-circles">
+            <span class="logo-circle-left"></span>
+            <span class="logo-circle-right"></span>
+          </div>
+          <span>Campus<span class="text-coral">Connect</span></span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            </span>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <a href="events.html" class="nav-item active">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </span>
+            <span>Events</span>
+          </div>
+          <span class="badge badge-primary">17</span>
+        </a>
+
+        <a href="clubs.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <span>Clubs</span>
+          </div>
+          <span class="badge badge-primary">18</span>
+        </a>
+
+        <a href="sports.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path><path d="M14 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+            </span>
+            <span>Sports</span>
+          </div>
+          <span class="badge badge-warning">Trials</span>
+        </a>
+
+        <a href="announcements.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            </span>
+            <span>Announcements</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Academic & Campus</div>
+
+        <a href="campus-map.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+            </span>
+            <span>Campus Map</span>
+          </div>
+          <span class="badge badge-primary">68 Acres</span>
+        </a>
+        <a href="resources.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <span>Resources</span>
+          </div>
+        </a>
+
+        <a href="lost-found.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <span>Lost & Found</span>
+          </div>
+        </a>
+
+        <a href="create-post.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            </span>
+            <span>Create Post</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Personal</div>
+
+        <a href="profile.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </span>
+            <span>My Profile</span>
+          </div>
+        </a>
+
+        <a href="index.html" class="nav-item" title="Home">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </span>
+            <span>Home</span>
+          </div>
+        </a>
+
+        <a href="#" class="nav-item btn-logout-action" style="margin-top:auto; color:var(--danger);">
+          <div class="nav-item-content">
+            <span class="nav-item-icon" style="color:var(--danger)">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </span>
+            <span>Logout</span>
+          </div>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-mini-card">
+          <div class="avatar-circle sync-user-avatar">A</div>
+          <div class="user-mini-info">
+            <div class="user-mini-name sync-user-name">Atul Yadav</div>
+            <div class="user-mini-sub sync-user-sub">B.Tech (CSE)</div>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="btn-icon sidebar-toggle-btn" aria-label="Toggle navigation drawer">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+
+          <div class="search-container">
+            <div class="search-input-wrapper">
+              <span class="search-icon">
+                <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </span>
+              <input type="text" id="globalSearchInput" class="search-input" placeholder="Search events, exams, holidays..." autocomplete="off">
+            </div>
+            <div id="searchDropdown" class="search-dropdown"></div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn-icon theme-toggle-btn" aria-label="Toggle Theme">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+
+          <div class="notification-wrapper">
+            <button id="notifBtn" class="btn-icon" aria-label="Notifications">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span id="notifBadge" class="notification-badge">2</span>
+            </button>
+            <div id="notifDropdown" class="notification-dropdown">
+              <div class="notification-header">
+                <h4 style="font-size:0.95rem;">Notifications</h4>
+              </div>
+              <div id="notifList" class="notification-list"></div>
+            </div>
+          </div>
+
+          <div class="user-menu-wrapper">
+            <button id="userMenuBtn" class="avatar-circle sync-user-avatar" style="width:38px;height:38px;cursor:pointer;border:2px solid var(--border-color);">A</button>
+            <div id="userMenuDropdown" class="user-menu-dropdown">
+              <a href="profile.html" class="user-menu-item">My Profile</a>
+              <a href="index.html" class="user-menu-item" title="Home">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+              </a>
+              <div class="user-menu-item logout btn-logout-action">Logout</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Campus Events & Academic Calendar</h1>
+            <p class="page-subtitle">Official date-ordered schedule of Bennett University examinations, holidays, hackathons, and sports meets.</p>
+          </div>
+          <div style="display:flex;gap:0.75rem;">
+            <a href="sports.html" class="btn btn-outline btn-sm">Explore Sports Hub 🏆</a>
+            <a href="create-post.html" class="btn btn-secondary btn-sm">Host an Event</a>
+          </div>
+        </div>
+
+        <!-- Bennett Academic Calendar Milestones Highlights -->
+        <div class="card" style="padding:1.25rem 1.5rem; margin-bottom:1.5rem; border-left:4px solid var(--primary); background:linear-gradient(to right, var(--bg-card), var(--bg-hover));">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.75rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:1.2rem;">🏛️</span>
+              <strong style="font-size:0.95rem; color:var(--text-primary);">Bennett University Academic Timeline (Odd Semester 2026-27)</strong>
+            </div>
+            <span class="badge badge-primary">Official Registrar Schedule</span>
+          </div>
+          
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; font-size:0.85rem;">
+            <div style="background:var(--bg-card); padding:0.75rem 1rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+              <div style="color:var(--text-muted); font-size:0.75rem; text-transform:uppercase; font-weight:700;">Mid-Sem Examinations</div>
+              <div style="font-weight:700; color:var(--danger); font-size:0.95rem; margin-top:0.25rem;">20 Oct - 26 Oct 2026</div>
+              <div style="color:var(--text-secondary); font-size:0.78rem;">Exam Blocks A, B, C</div>
+            </div>
+
+            <div style="background:var(--bg-card); padding:0.75rem 1rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+              <div style="color:var(--text-muted); font-size:0.75rem; text-transform:uppercase; font-weight:700;">Upcoming Sports Fest</div>
+              <div style="font-weight:700; color:var(--warning); font-size:0.95rem; margin-top:0.25rem;">28 Oct - 30 Oct 2026</div>
+              <div style="color:var(--text-secondary); font-size:0.78rem;">Sportikon 2026 (16+ Sports)</div>
+            </div>
+
+            <div style="background:var(--bg-card); padding:0.75rem 1rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+              <div style="color:var(--text-muted); font-size:0.75rem; text-transform:uppercase; font-weight:700;">Diwali Recess</div>
+              <div style="font-weight:700; color:var(--success); font-size:0.95rem; margin-top:0.25rem;">08 Nov - 12 Nov 2026</div>
+              <div style="color:var(--text-secondary); font-size:0.78rem;">5-Day Festival Vacation</div>
+            </div>
+
+            <div style="background:var(--bg-card); padding:0.75rem 1rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+              <div style="color:var(--text-muted); font-size:0.75rem; text-transform:uppercase; font-weight:700;">End-Sem Theory Exams</div>
+              <div style="font-weight:700; color:var(--danger); font-size:0.95rem; margin-top:0.25rem;">14 Dec - 24 Dec 2026</div>
+              <div style="color:var(--text-secondary); font-size:0.78rem;">Mandatory ERP Admit Card</div>
+            </div>
+
+            <div style="background:var(--bg-card); padding:0.75rem 1rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+              <div style="color:var(--text-muted); font-size:0.75rem; text-transform:uppercase; font-weight:700;">Winter Vacation</div>
+              <div style="font-weight:700; color:var(--primary); font-size:0.95rem; margin-top:0.25rem;">26 Dec '26 - 10 Jan '27</div>
+              <div style="color:var(--text-secondary); font-size:0.78rem;">Spring Classes: 11 Jan 2027</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="filter-bar">
+          <div class="filter-pills">
+            <button class="filter-pill active" data-category="all">All Dates (Date-wise)</button>
+            <button class="filter-pill" data-category="Exam">🎓 Exams & Midsem</button>
+            <button class="filter-pill" data-category="Holiday">🏖️ University Holidays</button>
+            <button class="filter-pill" data-category="Sports">🏆 Sports Fest</button>
+            <button class="filter-pill" data-category="Hackathon">⚡ Hackathons</button>
+            <button class="filter-pill" data-category="Cultural">🎭 Cultural Fests</button>
+            <button class="filter-pill" data-category="Technical">💻 Technical</button>
+            <button class="filter-pill" data-category="Workshop">💡 Workshops</button>
+          </div>
+
+          <div style="display:flex;gap:0.75rem;margin-left:auto;width:100%;max-width:440px;">
+            <input type="text" id="eventSearchInput" class="form-control" placeholder="Search events, exams, holidays..." style="padding:0.5rem 0.85rem;font-size:0.88rem;">
+            <select id="locationFilter" class="form-select" style="width:165px;padding:0.5rem 0.85rem;font-size:0.88rem;">
+              <option value="">All Venues</option>
+              <option value="Auditorium">Auditorium</option>
+              <option value="Hatchery">The Hatchery</option>
+              <option value="Sports Complex">Sports Complex</option>
+              <option value="Amphitheatre">Amphitheatre</option>
+              <option value="Examination">Examination Halls</option>
+              <option value="Campus-Wide">Campus-Wide (Holidays)</option>
+              <option value="Lab">HPC / Computing Labs</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Events Cards Grid (Rendered strictly in chronological order) -->
+        <div id="eventsGrid" class="events-grid">
+          <!-- Rendered by events.js -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Event Details Modal -->
+  <div id="eventDetailsModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Event Overview</h3>
+        <button class="btn-icon" onclick="closeModal('eventDetailsModal')">&times;</button>
+      </div>
+      <div id="eventModalBody" class="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('eventDetailsModal')">Close</button>
+        <button id="modalRegisterBtn" class="btn btn-primary">Register For Event</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <a href="dashboard.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>Home</span>
+    </a>
+    <a href="events.html" class="mobile-nav-link active">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+      <span>Events</span>
+    </a>
+    <a href="clubs.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+      <span>Clubs</span>
+    </a>
+    <a href="sports.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+      <span>Sports</span>
+    </a>
+    <a href="profile.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- App Core & Events -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/events.js"></script>
+</body>
+</html>

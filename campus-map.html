@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bennett Campus Map & Directory | CampusConnect</title>
+    <!-- Instant Theme Setter (Prevents white background blinking / FOUC on page switch) -->
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('campusconnect_theme') || localStorage.getItem('campus_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* Campus Map Page Custom Styles */
+    .map-hero {
+      background: linear-gradient(135deg, #1F2937 0%, #111827 60%, rgba(255, 99, 74, 0.25) 100%);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow-lg);
+    }
+    .map-hero::after {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 99, 74, 0.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .map-hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 99, 74, 0.2);
+      border: 1px solid rgba(255, 99, 74, 0.4);
+      color: #FF7B66;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 0.85rem;
+    }
+    .map-hero h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: #FFFFFF;
+    }
+    .map-hero p {
+      color: #D1D5DB;
+      font-size: 0.98rem;
+      max-width: 780px;
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+    }
+    .map-stats-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 1.25rem;
+    }
+    .map-stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .map-stat-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FF7B66;
+      font-size: 1.1rem;
+    }
+    .map-stat-text strong {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .map-stat-text span {
+      font-size: 0.78rem;
+      color: #9CA3AF;
+    }
+
+    /* Live Sync Banner Strip */
+    .sync-status-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-xs);
+    }
+    .sync-status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+      animation: pulseGreen 2s infinite;
+    }
+    @keyframes pulseGreen {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* Map Controls & Category Pills */
+    .map-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    .map-pills-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .map-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 1.1rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .map-pill:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .map-pill.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-coral);
+    }
+    .map-search-box {
+      position: relative;
+      min-width: 280px;
+      flex: 1;
+      max-width: 380px;
+    }
+    .map-search-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-full);
+      padding: 0.55rem 1.1rem 0.55rem 2.6rem;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+    .map-search-input:focus {
+      border-color: var(--primary);
+    }
+    .map-search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Interactive Campus Layout Blueprint */
+    .campus-blueprint-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2.5rem;
+    }
+    .blueprint-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .blueprint-header h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .blueprint-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+    .legend-academic { background: #3B82F6; }
+    .legend-sports { background: #10B981; }
+    .legend-living { background: #F59E0B; }
+    .legend-atrium { background: #FF634A; }
+
+    /* Interactive Blueprint Zone Grid */
+    .zones-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .zone-box {
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      position: relative;
+      cursor: pointer;
+      transition: all var(--transition-base);
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 140px;
+    }
+    .zone-box:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    .zone-box.academic-zone {
+      background: rgba(59, 130, 246, 0.08);
+      border-color: rgba(59, 130, 246, 0.25);
+    }
+    .zone-box.academic-zone:hover {
+      border-color: #3B82F6;
+    }
+    .zone-box.sports-zone {
+      background: rgba(16, 185, 129, 0.08);
+      border-color: rgba(16, 185, 129, 0.25);
+    }
+    .zone-box.sports-zone:hover {
+      border-color: #10B981;
+    }
+    .zone-box.living-zone {
+      background: rgba(245, 158, 11, 0.08);
+      border-color: rgba(245, 158, 11, 0.25);
+    }
+    .zone-box.living-zone:hover {
+      border-color: #F59E0B;
+    }
+    .zone-box.center-zone {
+      background: rgba(255, 99, 74, 0.09);
+      border-color: rgba(255, 99, 74, 0.3);
+    }
+    .zone-box.center-zone:hover {
+      border-color: var(--primary);
+    }
+
+    .zone-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      width: fit-content;
+    }
+    .zone-box.academic-zone .zone-badge { background: rgba(59, 130, 246, 0.18); color: #2563EB; }
+    .zone-box.sports-zone .zone-badge { background: rgba(16, 185, 129, 0.18); color: #059669; }
+    .zone-box.living-zone .zone-badge { background: rgba(245, 158, 11, 0.18); color: #D97706; }
+    .zone-box.center-zone .zone-badge { background: rgba(255, 99, 74, 0.18); color: #EA580C; }
+
+    .zone-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+    .zone-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .zone-action-hint {
+      margin-top: 0.75rem;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* Grid Span Configurations */
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+
+    /* Directory Cards Grid */
+    .directory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .dir-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .dir-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(255, 99, 74, 0.4);
+    }
+    .dir-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    .dir-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      background: var(--palette-bg);
+    }
+    .dir-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+    }
+    .dir-tagline {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      margin-bottom: 1rem;
+    }
+    .dir-floors-list {
+      background: var(--palette-bg);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.9rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .dir-floor-item {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+    .dir-floor-item:last-child {
+      margin-bottom: 0;
+    }
+    .dir-floor-label {
+      font-weight: 700;
+      color: var(--text-primary);
+      min-width: 65px;
+    }
+    .dir-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-light);
+      padding-top: 0.85rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .btn-view-details {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .btn-view-details:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #FFFFFF;
+    }
+
+    /* Google Maps Embed Card */
+    /* Master Plan Layout Map Card */
+    .master-plan-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .master-plan-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .master-plan-header h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      letter-spacing: -0.01em;
+    }
+    .master-plan-viewer {
+      position: relative;
+      background: #0B111E;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+      min-height: 480px;
+    }
+    .plan-zoom-toolbar {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 20;
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 0.35rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .plan-zoom-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 700;
+      transition: all 0.15s ease;
+    }
+    .plan-zoom-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    .plan-zoom-level {
+      color: #FFFFFF;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      padding: 0 0.5rem;
+      user-select: none;
+    }
+    .master-plan-img {
+      width: 100%;
+      height: auto;
+      max-height: 820px;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.3s ease, filter 0.2s ease;
+      cursor: zoom-in;
+      filter: contrast(1.08) brightness(1.04) saturate(1.15);
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+    .master-plan-img:hover {
+      filter: contrast(1.12) brightness(1.06) saturate(1.2);
+    }
+    .master-plan-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .master-plan-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 99, 74, 0.12);
+      border: 1px solid rgba(255, 99, 74, 0.3);
+      color: var(--primary);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .master-plan-legend-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-light);
+    }
+    .plan-tag-pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-full);
+      background: var(--palette-bg);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .plan-tag-pill:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .plan-tag-pill span.color-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Fullscreen Modal Viewer for Master Plan */
+    #planImageModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.94);
+      z-index: 99999;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+    #planImageModal.active {
+      display: flex;
+    }
+    #planImageModal img {
+      max-width: 96vw;
+      max-height: 94vh;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      border: 1px solid rgba(255,255,255,0.15);
+      filter: contrast(1.08) brightness(1.04) saturate(1.15);
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+    #planImageModal .close-plan-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    #planImageModal .close-plan-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .google-maps-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2rem;
+    }
+    .maps-frame-wrapper {
+      width: 100%;
+      height: 380px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      margin-top: 1rem;
+      position: relative;
+    }
+    .maps-frame-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    @media (max-width: 1024px) {
+      .span-4, .span-6, .span-8 { grid-column: span 12; }
+    }
+    @media (max-width: 768px) {
+      .map-hero { padding: 1.5rem; }
+      .map-hero h1 { font-size: 1.6rem; }
+      .map-search-box { min-width: 100%; max-width: 100%; }
+      .maps-frame-wrapper { height: 280px; }
+    }
+
+    /* Dark Mode Specific Polished Overrides */
+    [data-theme="dark"] .dir-card {
+      background: var(--bg-card);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .dir-card:hover {
+      border-color: rgba(255, 99, 74, 0.5);
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
+    }
+    [data-theme="dark"] .dir-floors-list {
+      background: #151F30 !important;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #CBD5E1 !important;
+    }
+    [data-theme="dark"] .dir-floor-label {
+      color: #F8FAFC !important;
+    }
+    [data-theme="dark"] .dir-floor-item span {
+      color: #CBD5E1 !important;
+    }
+    [data-theme="dark"] .dir-icon {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    [data-theme="dark"] .btn-view-details {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.14);
+      color: #F8FAFC;
+    }
+    [data-theme="dark"] .btn-view-details:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #FFFFFF;
+    }
+    [data-theme="dark"] .sync-status-strip {
+      background: var(--bg-card);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .map-pill {
+      background: var(--bg-card);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #CBD5E1;
+    }
+    [data-theme="dark"] .map-pill:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(255, 99, 74, 0.12);
+    }
+    [data-theme="dark"] .map-pill.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(255, 99, 74, 0.4);
+    }
+    [data-theme="dark"] .map-search-input {
+      background: var(--bg-card);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #F8FAFC;
+    }
+    [data-theme="dark"] .map-search-input:focus {
+      border-color: var(--primary);
+    }
+    [data-theme="dark"] .campus-blueprint-card {
+      background: var(--bg-card);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .blueprint-header {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .master-plan-card {
+      background: var(--bg-card);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .master-plan-header {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .master-plan-legend-pills {
+      border-top-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .plan-tag-pill {
+      background: #151F30;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #CBD5E1;
+    }
+    [data-theme="dark"] .google-maps-section {
+      background: var(--bg-card);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .maps-frame-wrapper {
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo-wrapper" title="CampusConnect - Home">
+          <div class="logo-circles">
+            <span class="logo-circle-left"></span>
+            <span class="logo-circle-right"></span>
+          </div>
+          <span>Campus<span class="text-coral">Connect</span></span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            </span>
+            <span>Dashboard</span>
+          </div>
+        </a>
+
+        <a href="events.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </span>
+            <span>Events</span>
+          </div>
+          <span class="badge badge-primary">17</span>
+        </a>
+
+        <a href="clubs.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <span>Clubs</span>
+          </div>
+          <span class="badge badge-primary">18</span>
+        </a>
+
+        <a href="sports.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path><path d="M14 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+            </span>
+            <span>Sports</span>
+          </div>
+          <span class="badge badge-warning">Trials</span>
+        </a>
+
+        <a href="announcements.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            </span>
+            <span>Announcements</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Academic & Campus</div>
+
+        <a href="campus-map.html" class="nav-item active">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+            </span>
+            <span>Campus Map</span>
+          </div>
+          <span class="badge badge-primary">68 Acres</span>
+        </a>
+
+        <a href="resources.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <span>Study Resources</span>
+          </div>
+        </a>
+
+        <a href="lost-found.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </span>
+            <span>Lost & Found</span>
+          </div>
+        </a>
+
+        <div class="nav-label">Settings</div>
+
+        <a href="profile.html" class="nav-item">
+          <div class="nav-item-content">
+            <span class="nav-item-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </span>
+            <span>My Profile</span>
+          </div>
+        </a>
+      </nav>
+
+      <!-- Sidebar Mini Profile -->
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-mini-card">
+          <div class="avatar-circle sync-user-avatar">A</div>
+          <div class="user-mini-info">
+            <div class="user-mini-name sync-user-name">Atul Yadav</div>
+            <div class="user-mini-sub sync-user-sub">B.Tech (CSE)</div>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+      <!-- Top Navigation Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="btn-icon sidebar-toggle-btn" aria-label="Toggle navigation drawer" title="Toggle Sidebar">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="search-container">
+            <div class="search-input-wrapper">
+              <span class="search-icon">
+                <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </span>
+              <input type="text" id="globalSearchInput" class="search-input" placeholder="Search events, clubs, buildings, notes..." autocomplete="off">
+            </div>
+            <div id="searchDropdown" class="search-dropdown"></div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Instant Silent Feed Sync Button (Option 1) -->
+          <button id="btnSyncFeed" class="btn btn-outline btn-sync-feed" style="padding:0.45rem 0.95rem;font-size:0.83rem;border-radius:var(--radius-full);gap:0.4rem;" title="Sync Bennett live feeds">
+            <svg class="icon-svg" viewBox="0 0 24 24" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+            <span>Sync Feed</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button class="theme-toggle-btn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+
+          <!-- Notifications -->
+          <div class="notification-wrapper">
+            <button id="notifBtn" class="btn-icon" aria-label="Notifications" title="Notifications">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span id="notifBadge" class="notification-badge" style="display:none;">0</span>
+            </button>
+            <div id="notifDropdown" class="notification-dropdown">
+              <div class="notification-header">
+                <h4 style="font-size:0.95rem;">Notifications</h4>
+              </div>
+              <div id="notifList" class="notification-list"></div>
+            </div>
+          </div>
+
+          <!-- User Menu -->
+          <div class="user-menu-wrapper">
+            <button id="userMenuBtn" class="avatar-circle sync-user-avatar" style="width:38px;height:38px;cursor:pointer;border:2px solid var(--border-color);">
+              A
+            </button>
+            <div id="userMenuDropdown" class="user-menu-dropdown">
+              <a href="profile.html" class="user-menu-item">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span>My Profile</span>
+              </a>
+              <div style="height:1px;background:var(--border-light);margin:0.25rem 0;"></div>
+              <a href="#" class="user-menu-item btn-logout-action text-danger" style="color:var(--danger);">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span>Log Out</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Body -->
+      <div class="content-body">
+        
+        <!-- Hero Section -->
+        <div class="map-hero">
+          <div class="map-hero-tag">
+            <svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+            Bennett University • Campus Map & Directory
+          </div>
+          <h1>Bennett Campus Navigation & Directory</h1>
+          <p>
+            Explore all 68 acres across Plot Nos 8-11, TechZone II, Greater Noida. Find lecture halls, SCSET engineering labs, sports arenas, cafeteria counters, hostel towers, and 24x7 medical emergency facilities.
+          </p>
+
+          <div class="map-stats-strip">
+            <div class="map-stat-item">
+              <div class="map-stat-icon">🏛️</div>
+              <div class="map-stat-text">
+                <strong>68 Acres</strong>
+                <span>Sprawling Residential Campus</span>
+              </div>
+            </div>
+            <div class="map-stat-item">
+              <div class="map-stat-icon">💻</div>
+              <div class="map-stat-text">
+                <strong>Block P & A</strong>
+                <span>High-Tech Labs & Administration</span>
+              </div>
+            </div>
+            <div class="map-stat-item">
+              <div class="map-stat-icon">⚽</div>
+              <div class="map-stat-text">
+                <strong>16+ Arenas</strong>
+                <span>FIFA Turf, Olympic Pool & Courts</span>
+              </div>
+            </div>
+            <div class="map-stat-item">
+              <div class="map-stat-icon">🏥</div>
+              <div class="map-stat-text">
+                <strong>24x7 Medical</strong>
+                <span>Resident Doctors & Ambulance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Silent Live Sync Status Strip (Option 1 Indicator) -->
+        <div class="sync-status-strip">
+          <div class="sync-status-indicator">
+            <span class="pulse-dot"></span>
+            <span>Autonomous Feed Sync: Active (Automatic updates from Bennett University public circulars)</span>
+          </div>
+          <div style="font-size:0.8rem;color:var(--text-muted);display:flex;align-items:center;gap:0.4rem;">
+            <svg class="icon-svg" viewBox="0 0 24 24" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span id="lastSyncTime">Synced Real-Time</span>
+          </div>
+        </div>
+
+        <!-- Filter Pills & Search -->
+        <div class="map-filter-bar">
+          <div class="map-pills-group" id="mapCategoryFilters">
+            <button class="map-pill active" data-category="all">🏢 All Zones</button>
+            <button class="map-pill" data-category="academic">💻 Academic & Labs</button>
+            <button class="map-pill" data-category="sports">🏆 Sports & Athletics</button>
+            <button class="map-pill" data-category="center">🌟 Central Landmarks</button>
+            <button class="map-pill" data-category="living">☕ Dining & Hostels</button>
+            <button class="map-pill" data-category="medical">🏥 Medical & Transit</button>
+          </div>
+
+          <div class="map-search-box">
+            <svg class="icon-svg map-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="mapSearchInput" class="map-search-input" placeholder="Search block, lab, court, mess...">
+          </div>
+        </div>
+
+        <!-- Official Bennett University Campus Master Plan Layout Map -->
+        <div class="master-plan-card" id="masterPlanSection">
+          <div class="master-plan-header">
+            <div>
+              <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.35rem;">
+                <span class="master-plan-badge">🗺️ Official Campus Ground Map</span>
+                <span style="font-size:0.8rem; font-weight:700; color:#10B981; display:flex; align-items:center; gap:0.3rem;">
+                  <span class="pulse-dot"></span> NAAC Grade A+ Accredited Campus
+                </span>
+              </div>
+              <h3 style="margin-bottom:0.25rem;">
+                Bennett University Master Plan & Layout Map
+              </h3>
+              <p style="font-size:0.88rem; color:var(--text-secondary); margin:0;">
+                Official architectural layout map installed on campus boards across Greater Noida campus. Click on the map to zoom or open in high-definition full screen.
+              </p>
+            </div>
+            <div class="master-plan-controls">
+              <button type="button" class="btn btn-outline btn-sm" onclick="openPlanModal()" style="gap:0.4rem; font-weight:600;">
+                <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px;height:15px;"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                <span>Full Screen Zoom</span>
+              </button>
+              <a href="assets/images/bennett-university-master-plan.png" download="Bennett-University-Master-Plan.png" class="btn btn-primary btn-sm" style="gap:0.4rem; font-weight:600;">
+                <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px;height:15px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Download Map</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- High-Resolution Image Container with Zoom & Pan -->
+          <div class="master-plan-viewer" id="masterPlanViewerContainer" title="Double click or use buttons to zoom & pan across Bennett campus">
+            <div class="plan-zoom-toolbar">
+              <button type="button" class="plan-zoom-btn" onclick="zoomInMap()" title="Zoom In (+)">+</button>
+              <button type="button" class="plan-zoom-btn" onclick="zoomOutMap()" title="Zoom Out (-)">−</button>
+              <button type="button" class="plan-zoom-btn" onclick="resetMapZoom()" title="Reset (100%)">⟲</button>
+              <button type="button" class="plan-zoom-btn" onclick="openPlanModal()" title="Full Screen View">⛶</button>
+            </div>
+            <img src="assets/images/bennett-university-master-plan.png" alt="Bennett University Master Plan - Greater Noida Campus Layout" class="master-plan-img" id="masterPlanImage" ondblclick="toggleMasterZoom()">
+          </div>
+
+          <!-- Interactive Map Legend & Quick Navigator (Based on Ground Map) -->
+          <div class="master-plan-legend-pills">
+            <div class="plan-tag-pill" onclick="selectZone('blockA')" title="View Block A details">
+              <span class="color-dot" style="background:#EAB308;"></span>
+              <strong>Block A & B:</strong> Academic & Admin
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('blockP')" title="View Block P details">
+              <span class="color-dot" style="background:#EF4444;"></span>
+              <strong>Block P:</strong> SCSET Engineering Labs
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('hangar')" title="View German Hangar details">
+              <span class="color-dot" style="background:#94A3B8;"></span>
+              <strong>German Hangar:</strong> Central Mega Pavilion
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('blockN')" title="View Block N details">
+              <span class="color-dot" style="background:#F97316;"></span>
+              <strong>Block N:</strong> Lecture Theatres (LTs)
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('blockM')" title="View Block M details">
+              <span class="color-dot" style="background:#A855F7;"></span>
+              <strong>Block M & L:</strong> Faculty Chambers
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('cafeBlockE')" title="View Cafe details">
+              <span class="color-dot" style="background:#EC4899;"></span>
+              <strong>Cafe Block E:</strong> Gobble & Food Street
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('girlsHostels')" title="View Girls Hostels details">
+              <span class="color-dot" style="background:#F43F5E;"></span>
+              <strong>Girls Hostels:</strong> Blocks D1 - D6
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('boysHostels')" title="View Boys Hostels details">
+              <span class="color-dot" style="background:#FB923C;"></span>
+              <strong>Boys Hostels:</strong> Blocks C1 - C12
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('sportsComplex')" title="View Indoor Sports details">
+              <span class="color-dot" style="background:#0EA5E9;"></span>
+              <strong>Sports Complex:</strong> 50m Pool, Gym & Courts
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('outdoorSports')" title="View Outdoor Courts details">
+              <span class="color-dot" style="background:#10B981;"></span>
+              <strong>Outdoor Courts:</strong> Tennis, Padel & Basketball
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('turf')" title="View Football Turf details">
+              <span class="color-dot" style="background:#22C55E;"></span>
+              <strong>Football Ground:</strong> Synthetic Turf & Track
+            </div>
+            <div class="plan-tag-pill" onclick="selectZone('gate1')" title="View Gate 1 details">
+              <span class="color-dot" style="background:#6366F1;"></span>
+              <strong>Gate 1, 2 & 3:</strong> Entrances & Transit
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Campus Blueprint Layout Visualizer -->
+        <div class="campus-blueprint-card">
+          <div class="blueprint-header">
+            <h3>
+              <svg class="icon-svg" viewBox="0 0 24 24" style="color:var(--primary);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              Bennett University Architectural Zone Blueprint
+            </h3>
+            <div class="blueprint-legend">
+              <div class="legend-item"><span class="legend-color legend-academic"></span> Academic / Labs</div>
+              <div class="legend-item"><span class="legend-color legend-sports"></span> Sports Complex</div>
+              <div class="legend-item"><span class="legend-color legend-atrium"></span> Central Core / LRC</div>
+              <div class="legend-item"><span class="legend-color legend-living"></span> Hostels & Dining</div>
+            </div>
+          </div>
+
+          <div class="zones-grid" id="blueprintZonesGrid">
+            <!-- Gate 1 & Entrance -->
+            <div class="zone-box span-12 center-zone" onclick="selectZone('gate1')">
+              <div>
+                <span class="zone-badge">Main Entrance</span>
+                <div class="zone-title">Gate 1 & Visitor Welcome Pavilion</div>
+                <div class="zone-desc">Main campus security hub, shuttle bus drop & pick point (Botanical Garden & Pari Chowk Metro routes), and visitor reception.</div>
+              </div>
+              <div class="zone-action-hint">Click for directions & shuttle timings →</div>
+            </div>
+
+            <!-- Block A -->
+            <div class="zone-box span-4 academic-zone" onclick="selectZone('blockA')">
+              <div>
+                <span class="zone-badge">Admin Wing</span>
+                <div class="zone-title">Block A - University Headquarters</div>
+                <div class="zone-desc">Office of Vice Chancellor, Registrar, Dean of Academic Affairs, Examination Cell, Central Reception, and Executive Seminar Rooms.</div>
+              </div>
+              <div class="zone-action-hint">Floor guide: G to 4th Floor →</div>
+            </div>
+
+            <!-- Central Atrium & LRC -->
+            <div class="zone-box span-4 center-zone" onclick="selectZone('atrium')">
+              <div>
+                <span class="zone-badge">Campus Core</span>
+                <div class="zone-title">The Central Atrium & 2-Story LRC Library</div>
+                <div class="zone-desc">The iconic glass-roof atrium hub, 24x7 Learning Resource Centre, Moot Court (School of Law), and discussion pods.</div>
+              </div>
+              <div class="zone-action-hint">Explore library floors & pods →</div>
+            </div>
+
+            <!-- Block P -->
+            <div class="zone-box span-4 academic-zone" onclick="selectZone('blockP')">
+              <div>
+                <span class="zone-badge">Engineering Wing</span>
+                <div class="zone-title">Block P - SCSET High-Tech Labs</div>
+                <div class="zone-desc">Computer Science & Engineering labs, Apple iMac Lab, NVIDIA GPU AI Lab, Robotics Arena, Supercomputing cluster, and project studios.</div>
+              </div>
+              <div class="zone-action-hint">Lab inventory & timings →</div>
+            </div>
+
+            <!-- Block B & Media -->
+            <div class="zone-box span-4 academic-zone" onclick="selectZone('blockB')">
+              <div>
+                <span class="zone-badge">Management & Media</span>
+                <div class="zone-title">Block B - Times School of Media & SOM</div>
+                <div class="zone-desc">Admissions headquarters, TV broadcast studio, post-production audio/video suites, School of Management case study halls.</div>
+              </div>
+              <div class="zone-action-hint">View media studios →</div>
+            </div>
+
+            <!-- The Bennett Hatchery -->
+            <div class="zone-box span-4 center-zone" onclick="selectZone('hatchery')">
+              <div>
+                <span class="zone-badge">Innovation & Startups</span>
+                <div class="zone-title">The Bennett Hatchery & Incubation Centre</div>
+                <div class="zone-desc">Times Group backed startup accelerator, seed funding pitch room, co-working desks for student founders, and 3D prototyping lab.</div>
+              </div>
+              <div class="zone-action-hint">Funding & incubation info →</div>
+            </div>
+
+            <!-- Sports Complex & Pool -->
+            <div class="zone-box span-4 sports-zone" onclick="selectZone('sportsComplex')">
+              <div>
+                <span class="zone-badge">Athletics Hub</span>
+                <div class="zone-title">Indoor AC Sports Arena & Aquatic Centre</div>
+                <div class="zone-desc">Olympic-sized 50m swimming pool, 4 AC badminton courts, glass-back squash courts, table tennis arena, and LifeFitness gym.</div>
+              </div>
+              <div class="zone-action-hint">Pool & court rules →</div>
+            </div>
+
+            <!-- Football Turf & Track -->
+            <div class="zone-box span-6 sports-zone" onclick="selectZone('turf')">
+              <div>
+                <span class="zone-badge">Outdoor Sports</span>
+                <div class="zone-title">FIFA-Standard Football Turf & 400m Track</div>
+                <div class="zone-desc">Floodlit synthetic turf for Sportikon and varsity football, 8-lane athletic running track, and cricket practice nets with bowling machines.</div>
+              </div>
+              <div class="zone-action-hint">View varsity grounds →</div>
+            </div>
+
+            <!-- Dining & Cafeterias -->
+            <div class="zone-box span-6 living-zone" onclick="selectZone('dining')">
+              <div>
+                <span class="zone-badge">Dining & Cafes</span>
+                <div class="zone-title">Central Dining Hall, Quench & Nescafe Hub</div>
+                <div class="zone-desc">Multi-cuisine student mess, Quench Cafeteria, Subway, Kathi Junction, outdoor amphitheatre steps, and night canteen kiosks.</div>
+              </div>
+              <div class="zone-action-hint">Mess timings & menu →</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Building Directory Grid -->
+        <div class="section-header" style="margin-bottom:1.25rem;">
+          <div>
+            <h3 style="font-size:1.35rem;font-weight:700;color:var(--text-primary);margin-bottom:0.25rem;">Campus Directory & Floor Plans</h3>
+            <p style="font-size:0.88rem;color:var(--text-secondary);">Comprehensive breakdown of floors, services, and operational hours across Bennett University.</p>
+          </div>
+        </div>
+
+        <div class="directory-grid" id="directoryCardsGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- Official GPS Live Map Embed -->
+        <div class="google-maps-section">
+          <div class="section-header" style="margin-bottom:0.75rem;">
+            <div>
+              <h3 style="font-size:1.25rem;font-weight:700;color:var(--text-primary);margin-bottom:0.25rem;">
+                📍 Bennett University Live GPS Map
+              </h3>
+              <p style="font-size:0.85rem;color:var(--text-secondary);">Plot Nos 8-11, TechZone II, Greater Noida, Uttar Pradesh 201310</p>
+            </div>
+            <a href="https://maps.google.com/?q=Bennett+University+Greater+Noida" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="gap:0.4rem;font-size:0.85rem;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+              <span>Open in Google Maps</span>
+            </a>
+          </div>
+
+          <div class="maps-frame-wrapper">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.472901691238!2d77.58156167618995!3d28.465293691652434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cc75b8a5b231f%3A0xb3514a4c6a6f685!2sBennett%20University!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Bennett University Greater Noida Map Location">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Detailed Location Modal -->
+  <div id="locationDetailModal" class="modal-overlay">
+    <div class="modal-card" style="max-width:580px;">
+      <div class="modal-header">
+        <div>
+          <span id="modalLocCategory" class="badge badge-primary" style="margin-bottom:0.35rem;">Category</span>
+          <h4 id="modalLocTitle" style="font-size:1.25rem;font-weight:700;color:var(--text-primary);">Building Title</h4>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('locationDetailModal')">
+          <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="modalLocDescription" style="font-size:0.92rem;color:var(--text-secondary);line-height:1.55;margin-bottom:1.25rem;"></p>
+        
+        <div style="font-weight:700;font-size:0.9rem;color:var(--text-primary);margin-bottom:0.6rem;">Floor-by-Floor Directory:</div>
+        <div id="modalLocFloors" style="background:var(--palette-bg);border-radius:var(--radius-md);padding:0.9rem;font-size:0.86rem;margin-bottom:1.25rem;"></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;background:var(--bg-hover);padding:0.85rem;border-radius:var(--radius-md);font-size:0.82rem;">
+          <div>
+            <div style="font-weight:700;color:var(--text-primary);margin-bottom:0.15rem;">Operational Hours:</div>
+            <div id="modalLocHours" style="color:var(--text-secondary);">8:00 AM - 8:00 PM</div>
+          </div>
+          <div>
+            <div style="font-weight:700;color:var(--text-primary);margin-bottom:0.15rem;">Nearest Landmark:</div>
+            <div id="modalLocLandmark" style="color:var(--text-secondary);">Central Atrium</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('locationDetailModal')">Close</button>
+        <a id="modalLocMapLink" href="https://maps.google.com/?q=Bennett+University+Greater+Noida" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="gap:0.4rem;">
+          <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+          <span>Get Directions</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <a href="dashboard.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>Home</span>
+    </a>
+    <a href="events.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+      <span>Events</span>
+    </a>
+    <a href="clubs.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+      <span>Clubs</span>
+    </a>
+    <a href="campus-map.html" class="mobile-nav-link active">
+      <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+      <span>Map</span>
+    </a>
+    <a href="sports.html" class="mobile-nav-link">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+      <span>Sports</span>
+    </a>
+  </nav>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- Core Scripts & Map Controller -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/campus-map.js"></script>
+  <!-- Fullscreen Master Plan Modal -->
+  <div id="planImageModal" onclick="closePlanModal()">
+    <button class="close-plan-btn" onclick="closePlanModal()" aria-label="Close Fullscreen View">&times;</button>
+    <img src="assets/images/bennett-university-master-plan.png" alt="Bennett University Master Plan Fullscreen" onclick="event.stopPropagation()">
+  </div>
+
+  <script>
+    function openPlanModal() {
+      var modal = document.getElementById('planImageModal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closePlanModal() {
+      var modal = document.getElementById('planImageModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closePlanModal();
+    });
+  </script>
+
+  <script>
+    var currentMapScale = 1.0;
+    var isPanning = false;
+    var startX = 0, startY = 0;
+    var translateX = 0, translateY = 0;
+
+    function applyMapTransform() {
+      var img = document.getElementById('masterPlanImage');
+      if (img) {
+        img.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px) scale(' + currentMapScale + ')';
+        img.style.cursor = currentMapScale > 1.0 ? 'grab' : 'zoom-in';
+      }
+    }
+
+    function zoomInMap() {
+      if (currentMapScale < 3.5) {
+        currentMapScale = Math.min(3.5, currentMapScale + 0.35);
+        applyMapTransform();
+      }
+    }
+
+    function zoomOutMap() {
+      if (currentMapScale > 1.0) {
+        currentMapScale = Math.max(1.0, currentMapScale - 0.35);
+        if (currentMapScale === 1.0) {
+          translateX = 0;
+          translateY = 0;
+        }
+        applyMapTransform();
+      }
+    }
+
+    function resetMapZoom() {
+      currentMapScale = 1.0;
+      translateX = 0;
+      translateY = 0;
+      applyMapTransform();
+    }
+
+    function toggleMasterZoom() {
+      if (currentMapScale > 1.0) {
+        resetMapZoom();
+      } else {
+        currentMapScale = 2.0;
+        applyMapTransform();
+      }
+    }
+
+    // Interactive Drag to Pan when zoomed
+    var container = document.getElementById('masterPlanViewerContainer');
+    if (container) {
+      container.addEventListener('mousedown', function(e) {
+        if (currentMapScale > 1.0 && e.target.id === 'masterPlanImage') {
+          isPanning = true;
+          startX = e.clientX - translateX;
+          startY = e.clientY - translateY;
+          e.target.style.cursor = 'grabbing';
+          e.preventDefault();
+        }
+      });
+      window.addEventListener('mousemove', function(e) {
+        if (isPanning) {
+          translateX = e.clientX - startX;
+          translateY = e.clientY - startY;
+          applyMapTransform();
+        }
+      });
+      window.addEventListener('mouseup', function() {
+        if (isPanning) {
+          isPanning = false;
+          var img = document.getElementById('masterPlanImage');
+          if (img && currentMapScale > 1.0) {
+            img.style.cursor = 'grab';
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
