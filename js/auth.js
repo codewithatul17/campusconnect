@@ -159,36 +159,93 @@ document.addEventListener('DOMContentLoaded', () => {
   const googleBtns = document.querySelectorAll('.btn-google-auth');
   googleBtns.forEach(btn => {
     btn.addEventListener('click', async () => {
+      const alertBox = document.getElementById('authAlert');
+      const originalText = btn.innerHTML;
+
+      // Loading state on button
+      btn.disabled = true;
+      btn.style.opacity = '0.75';
+
       if (window.CampusConnectFirebase && window.CampusConnectFirebase.isReady) {
         try {
           const provider = new firebase.auth.GoogleAuthProvider();
+          provider.setCustomParameters({ prompt: 'select_account' });
           const result = await window.CampusConnectFirebase.auth.signInWithPopup(provider);
           
+          const user = result.user;
+
           // Upsert User in Firestore
-          const userDoc = await window.CampusConnectFirebase.db.collection('users').doc(result.user.uid).get();
-          if (!userDoc.exists) {
-            await window.CampusConnectFirebase.db.collection('users').doc(result.user.uid).set({
-              name: result.user.displayName || "Bennett Student",
-              email: result.user.email,
+          try {
+            const userDoc = await window.CampusConnectFirebase.db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists) {
+              const defaultProfile = {
+                name: user.displayName || "Bennett Student",
+                email: user.email,
+                course: "B.Tech",
+                branch: "Computer Science & Engineering",
+                year: "2nd Year",
+                college: "Bennett University, Greater Noida (The Times Group)",
+                photoURL: user.photoURL || "",
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              };
+              await window.CampusConnectFirebase.db.collection('users').doc(user.uid).set(defaultProfile);
+              CampusData.updateCurrentUser(defaultProfile);
+            } else {
+              CampusData.updateCurrentUser(userDoc.data());
+            }
+          } catch (dbErr) {
+            console.warn("Firestore profile sync notice:", dbErr);
+            // Save locally so dashboard recognizes student immediately
+            CampusData.updateCurrentUser({
+              name: user.displayName || "Bennett Student",
+              email: user.email,
               course: "B.Tech",
               branch: "Computer Science & Engineering",
               year: "2nd Year",
-              college: "Bennett University, Greater Noida (The Times Group)",
-              photoURL: result.user.photoURL || "",
-              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              photoURL: user.photoURL || ""
             });
           }
           
-          showToast("Signed in with Google! Welcome to Bennett CampusConnect", "success");
-          setTimeout(() => window.location.href = "dashboard.html", 600);
+          showAuthAlert(alertBox, `Signed in as ${user.displayName || user.email}! Redirecting...`, "success");
+          if (typeof showToast === 'function') {
+            showToast("Signed in with Google! Welcome to CampusConnect 🎉", "success");
+          }
+          setTimeout(() => window.location.href = "dashboard.html", 700);
         } catch (error) {
           console.error("Google auth error:", error);
-          showToast(error.message || "Failed to sign in with Google", "danger");
+          btn.disabled = false;
+          btn.style.opacity = '1';
+          btn.innerHTML = originalText;
+
+          // If user closed popup deliberately, don't show loud error
+          if (error.code === 'auth/popup-closed-by-user') {
+            return;
+          }
+
+          let friendlyMessage = "Google sign-in could not be completed.";
+          if (error.code === 'auth/unauthorized-domain') {
+            friendlyMessage = "Domain not yet whitelisted in Firebase Console (Authentication > Settings > Authorized domains).";
+          } else if (error.code === 'auth/operation-not-allowed') {
+            friendlyMessage = "Google provider is not enabled in Firebase Console (Authentication > Sign-in method).";
+          } else if (error.message) {
+            friendlyMessage = error.message;
+          }
+
+          showAuthAlert(alertBox, friendlyMessage, "error");
+          if (typeof showToast === 'function') {
+            showToast(friendlyMessage, "danger");
+          }
         }
       } else {
-        // Demo Mode
-        showToast("Demo Mode: Signed in with Google account!", "info");
-        setTimeout(() => window.location.href = "dashboard.html", 600);
+        // Fallback Demo Mode
+        setTimeout(() => {
+          const user = CampusData.getCurrentUser();
+          user.name = "Bennett Student (Google SSO)";
+          user.email = "student@bennett.edu.in";
+          CampusData.updateCurrentUser(user);
+          showAuthAlert(alertBox, "Signed in via Google SSO (Demo Mode)! Redirecting...", "success");
+          setTimeout(() => window.location.href = "dashboard.html", 600);
+        }, 500);
       }
     });
   });
