@@ -95,11 +95,11 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="signupName">Full Name</label>
-              <input type="text" id="signupName" class="form-control" placeholder="e.g. Atul Yadav" required>
+              <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
             </div>
             <div class="form-group">
               <label class="form-label" for="signupEmail">Bennett Email (@bennett.edu.in)</label>
-              <input type="email" id="signupEmail" class="form-control" placeholder="e.g. atul.yadav@bennett.edu.in" required>
+              <input type="email" id="signupEmail" class="form-control" placeholder="your.name@bennett.edu.in" required>
             </div>
           </div>
 
@@ -108,7 +108,8 @@
             <div class="form-group">
               <label class="form-label" for="signupCourse">Program / School</label>
               <select id="signupCourse" class="form-select" required>
-                <option value="B.Tech" selected>B.Tech (SCSET / SEAS)</option>
+                <option value="" disabled selected>Select Program</option>
+                <option value="B.Tech">B.Tech (SCSET / SEAS)</option>
                 <option value="BCA">BCA (SCSET)</option>
                 <option value="MCA">MCA (SCSET)</option>
                 <option value="BBA">BBA (School of Management)</option>
@@ -121,8 +122,9 @@
             <div class="form-group">
               <label class="form-label" for="signupYear">Year</label>
               <select id="signupYear" class="form-select" required>
+                <option value="" disabled selected>Select Year</option>
                 <option value="1st Year">1st Year</option>
-                <option value="2nd Year" selected>2nd Year</option>
+                <option value="2nd Year">2nd Year</option>
                 <option value="3rd Year">3rd Year</option>
                 <option value="4th Year">4th Year</option>
                 <option value="5th Year">5th Year (Law)</option>
@@ -131,7 +133,7 @@
 
             <div class="form-group">
               <label class="form-label" for="signupBranch">Branch / Specialization</label>
-              <input type="text" id="signupBranch" class="form-control" placeholder="e.g. CSE (AI & Data Science)" value="CSE (AI & Data Science)" required>
+              <input type="text" id="signupBranch" class="form-control" placeholder="e.g. CSE / ECE / Biotech / Media" value="" required>
             </div>
           </div>
 
