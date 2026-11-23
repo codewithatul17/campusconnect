@@ -34,6 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // Enforce official Bennett University student email domain
+      const emailLower = email.toLowerCase();
+      if (!emailLower.endsWith('@bennett.edu.in')) {
+        showAuthAlert(alertBox, "Access restricted: Please enter your official Bennett student email ending with @bennett.edu.in", "error");
+        return;
+      }
+
       setButtonLoading(submitBtn, true, "Signing in...");
       clearAuthAlert(alertBox);
 
@@ -91,6 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
       // Validation
       if (!name || !email || !password || !confirmPassword || !course || !year || !branch) {
         showAuthAlert(alertBox, "Please fill in all the required academic fields.", "error");
+        return;
+      }
+
+      // Enforce official Bennett University student email domain
+      const emailLower = email.toLowerCase();
+      if (!emailLower.endsWith('@bennett.edu.in')) {
+        showAuthAlert(alertBox, "Access restricted: Registration is exclusively for Bennett University students. Please use your @bennett.edu.in email.", "error");
         return;
       }
 
